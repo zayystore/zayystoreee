@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zayy Store | Belanja Mudah</title>
+<style>
+:root {
+  --bg: #f7f7fb;
+  --dark: #171526;
+  --purple: #7655e8;
+  --muted: #77768a;
+  --white: #ffffff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+header {
+  background: white;
+  border-bottom: 1px solid #ecebf3;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.nav {
+  max-width: 1180px;
+  margin: auto;
+  padding: 17px 22px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.logo span { color: var(--purple); }
+.search {
+  flex: 1;
+  display: flex;
+  background: #f4f3f9;
+  border-radius: 12px;
+  padding: 0 13px;
+}
+.search input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  outline: none;
+  padding: 13px 8px;
+}
+.cart-button, .primary {
+  border: 0;
+  background: var(--purple);
+  color: white;
+  border-radius: 11px;
+  padding: 12px 16px;
+  font-weight: 700;
+}
+main {
+  max-width: 1180px;
+  margin: auto;
+  padding: 26px 22px 60px;
+}
+.hero {
+  background: linear-gradient(120deg,#211b3d,#5740a5 65%,#9576f6);
+  color: white;
+  border-radius: 24px;
+  padding: 55px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  overflow: hidden;
+}
+.hero small {
+  color: #d5cbff;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+.hero h1 {
+  font-size: clamp(32px,5vw,55px);
+  line-height: 1.08;
+  margin: 15px 0;
+  max-width: 570px;
+}
+.hero p { color: #e0dcf4; line-height: 1.8; }
+.hero .primary {
+  background: white;
+  color: #453184;
+  margin-top: 10px;
+}
+.hero-art { font-size: 105px; }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 36px 0 18px;
+}
+.section-head h2 { margin: 0; font-size: 25px; }
+.muted { color: var(--muted); font-size: 14px; }
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.chip {
+  padding: 10px 17px;
+  border: 1px solid #e6e2f1;
+  border-radius: 30px;
+  background: white;
+  color: #555267;
+}
+.chip.active {
+  background: var(--dark);
+  color: white;
+  border-color: var(--dark);
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 20px;
+}
+.product {
+  background: white;
+  border: 1px solid #efedf5;
+  border-radius: 17px;
+  padding: 12px;
+  transition: transform .2s, box-shadow .2s;
+}
+.product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px #25204412;
+}
+.product img {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f0edf8;
+}
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  color: #6745d5;
+  background: #f0ebff;
+  padding: 6px 9px;
+  border-radius: 20px;
+  margin-top: 12px;
+}
+.product h3 { font-size: 15px; margin: 10px 0 7px; }
+.price { font-size: 17px; font-weight: 800; }
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+}
+.add {
+  border: 0;
+  background: #eee9ff;
+  color: #6143ce;
+  font-weight: 800;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+.add:hover { background: var(--purple); color: white; }
+.panel {
+  margin-top: 40px;
+  background: white;
+  border: 1px solid #eceaf3;
+  border-radius: 20px;
+  padding: 24px;
+}
+.panel h2 { margin-top: 0; }
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #eeeaf4;
+  padding: 15px 0;
+}
+.cart-row h4 { margin: 0 0 6px; }
+.cart-actions { display: flex; align-items: center; gap: 10px; }
+.qty {
+  border: 1px solid #e3dff0;
+  background: white;
+  border-radius: 7px;
+  padding: 5px 10px;
+}
+.remove {
+  border: 0;
+  background: transparent;
+  color: #cf4054;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 19px;
+  font-weight: 800;
+  padding: 22px 0;
+}
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field.full { grid-column: 1/-1; }
+.field label { font-size: 13px; font-weight: 700; }
+.field input, .field textarea, .field select {
+  border: 1px solid #e2dfed;
+  border-radius: 10px;
+  padding: 12px;
+  background: white;
+  outline-color: var(--purple);
+  width: 100%;
+}
+.field textarea { min-height: 85px; resize: vertical; }
+.primary:disabled { opacity: .5; cursor: not-allowed; }
+footer {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+}
+footer p { color: #bcb9ce; font-size: 13px; }
+.empty { color: var(--muted); padding: 20px 0; }
+.notice { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+@media(max-width:900px) {
+  .products { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .hero-art { font-size: 75px; }
+}
+@media(max-width:650px) {
+  .nav { flex-wrap: wrap; gap: 12px; padding: 14px; }
+  .logo { flex: 1; }
+  .search { order: 3; flex-basis: 100%; }
+  main { padding: 18px 14px 40px; }
+  .hero { padding: 32px 23px; }
+  .hero-art { display: none; }
+  .products { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; }
+  .product { padding: 8px; }
+  .product img { height: 145px; }
+  .product h3 { font-size: 13px; }
+  .price { font-size: 14px; }
+  .add { padding: 9px; font-size: 12px; }
+  .panel { padding: 16px; }
+  .checkout-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .section-head h2 { font-size: 21px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">ZAYY<span>STORE.</span></div>
+    <div class="search">
+      <span style="align-self:center">⌕</span>
+      <input id="search" placeholder="Cari produk favorit kamu...">
+    </div>
+    <button class="cart-button" onclick="goCart()">
+      🛒 Keranjang (<span id="cartCount">0</span>)
+    </button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <small>WELCOME TO ZAYY STORE</small>
+      <h1>Belanja Mudah.<br>Gaya Lebih Berkelas.</h1>
+      <p>Temukan produk favoritmu dengan mudah.<br>
+      Pilihan menarik, harga bersahabat.</p>
+      <button class="primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+        Belanja Sekarang →
+      </button>
+    </div>
+    <div class="hero-art">🛍️</div>
+  </section>
+
+  <div class="section-head" id="catalog">
+    <div>
+      <h2>Produk Pilihan</h2>
+      <p class="muted">Temukan produk terbaik untukmu.</p>
+    </div>
+    <span class="muted" id="productCount"></span>
+  </div>
+
+  <div class="categories" id="categories"></div>
+  <section class="products" id="products"></section>
+
+  <section class="panel" id="cart">
+    <h2>🛒 Keranjang Belanja</h2>
+    <p class="muted">Periksa produk sebelum melanjutkan checkout.</p>
+    <div id="cartItems"></div>
+    <div class="total">
+      <span>Total belanja</span>
+      <span id="total">Rp0</span>
+    </div>
+    <button class="primary" onclick="goCheckout()">Lanjut ke Checkout →</button>
+  </section>
+
+  <section class="panel" id="checkout">
+    <h2>📦 Checkout Pesanan</h2>
+    <p class="muted">Isi data berikut untuk mengirim pesanan ke penjual.</p>
+    <form id="checkoutForm">
+      <div class="checkout-grid">
+        <div class="field">
+          <label for="name">Nama lengkap *</label>
+          <input id="name" required placeholder="Nama penerima">
+        </div>
+        <div class="field">
+          <label for="phone">Nomor WhatsApp *</label>
+          <input id="phone" required type="tel"
+            placeholder="08xxxxxxxxxx">
+        </div>
+        <div class="field full">
+          <label for="address">Alamat lengkap *</label>
+          <textarea id="address" required
+            placeholder="Jalan, nomor rumah, kecamatan, kota..."></textarea>
+        </div>
+        <div class="field">
+          <label for="shipping">Pengiriman</label>
+          <select id="shipping">
+            <option value="Reguler">Reguler</option>
+            <option value="Express">Express</option>
+            <option value="Ambil sendiri">Ambil sendiri</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="payment">Metode pembayaran</label>
+          <select id="payment">
+            <option value="Konfirmasi dengan penjual">Konfirmasi dengan penjual</option>
+            <option value="Transfer bank">Transfer bank</option>
+            <option value="COD (jika tersedia)">COD (jika tersedia)</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="notes">Catatan pesanan (opsional)</label>
+          <textarea id="notes" placeholder="Warna, ukuran, atau catatan lainnya"></textarea>
+        </div>
+      </div>
+      <p class="notice">Biaya pengiriman dan pembayaran akan dikonfirmasi oleh penjual. Website demo ini belum memproses pembayaran otomatis.</p>
+      <button class="primary" type="submit">Kirim Pesanan via WhatsApp</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="logo">ZAYY<span>STORE.</span></div>
+  <p>Belanja nyaman, pilihan tanpa batas.</p>
+  <p>© <span id="year"></span> Zayy Store. All rights reserved.</p>
+</footer>
+
+<script>
+// GANTI nomor berikut dengan nomor WhatsApp penjual.
+// Gunakan kode negara 62, tanpa tanda + atau angka 0 di depan.
+const WHATSAPP_NUMBER = "6281234567890";
+
+const productsData = [
+  {id:1, name:"Sneakers Urban", category:"Fashion",
+   price:249000, image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"},
+  {id:2, name:"Jam Tangan Classic", category:"Aksesori",
+   price:175000, image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"},
+  {id:3, name:"Headphone Wireless", category:"Elektronik",
+   price:329000, image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"},
+  {id:4, name:"Tas Minimalis", category:"Fashion",
+   price:199000, image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80"},
+  {id:5, name:"Kamera Instan", category:"Elektronik",
+   price:450000, image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80"},
+  {id:6, name:"Kacamata Modern", category:"Aksesori",
+   price:99000, image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&q=80"},
+  {id:7, name:"Kursi Minimalis", category:"Rumah",
+   price:375000, image:"https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80"},
+  {id:8, name:"Lampu Dekorasi", category:"Rumah",
+   price:125000, image:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80"}
+];
+
+const rupiah = n => new Intl.NumberFormat("id-ID", {
+  style:"currency", currency:"IDR", maximumFractionDigits:0
+}).format(n);
+
+let cart = {};
+let activeCategory = "Semua";
+let searchTerm = "";
+
+try {
+  cart = JSON.parse(localStorage.getItem("zayyCart") || "{}") || {};
+} catch {
+  cart = {};
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem("zayyCart", JSON.stringify(cart));
+  } catch (e) {
+    console.warn("Keranjang tidak dapat disimpan di browser.");
+  }
+}
+
+function renderCategories() {
+  const categories = ["Semua", ...new Set(productsData.map(p=>p.category))];
+  document.getElementById("categories").innerHTML = categories.map(c=>
+    `<button class="chip ${c===activeCategory?"active":""}"
+      onclick="setCategory('${c}')">${c}</button>`
+  ).join("");
+}
+
+function setCategory(category) {
+  activeCategory = category;
+  renderCategories();
+  renderProducts();
+}
+
+function renderProducts() {
+  const filtered = productsData.filter(p =>
+    (activeCategory==="Semua" || p.category===activeCategory) &&
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  document.getElementById("productCount").textContent =
+    filtered.length + " produk";
+  document.getElementById("products").innerHTML = filtered.length
+    ? filtered.map(p=>`
+      <article class="product">
+        <img src="${p.image}" alt="${p.name}" loading="lazy"
+          onerror="this.style.display='none'">
+        <span class="tag">${p.category}</span>
+        <h3>${p.name}</h3>
+        <div class="price">${rupiah(p.price)}</div>
+        <div class="product-bottom">
+          <span class="muted">Produk pilihan</span>
+          <button class="add" onclick="addToCart(${p.id})">+ Tambah</button>
+        </div>
+      </article>
+    `).join("")
+    : '<p class="empty">Produk tidak ditemukan.</p>';
+}
+
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  saveCart();
+  renderCart();
+}
+
+function changeQty(id, delta) {
+  cart[id] = (cart[id] || 0) + delta;
+  if (cart[id] <= 0) delete cart[id];
+  saveCart();
+  renderCart();
+}
+
+function cartDetails() {
+  return productsData
+    .filter(p => cart[p.id] > 0)
+    .map(p => ({...p, qty:cart[p.id]}));
+}
+
+function renderCart() {
+  const items = cartDetails();
+  const count = items.reduce((sum,p)=>sum+p.qty,0);
+  const total = items.reduce((sum,p)=>sum+p.price*p.qty,0);
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("total").textContent = rupiah(total);
+
+  document.getElementById("cartItems").innerHTML = items.length
+    ? items.map(p=>`
+      <div class="cart-row">
+        <div>
+          <h4>${p.name}</h4>
+          <span class="muted">${rupiah(p.price)} / produk</span>
+          <div style="margin-top:7px;font-weight:700">${rupiah(p.price*p.qty)}</div>
+        </div>
+        <div class="cart-actions">
+          <button class="qty" onclick="changeQty(${p.id},-1)">−</button>
+          <span>${p.qty}</span>
+          <button class="qty" onclick="changeQty(${p.id},1)">+</button>
+          <button class="remove" onclick="removeItem(${p.id})">Hapus</button>
+        </div>
+      </div>
+    `).join("")
+    : '<p class="empty">Keranjang masih kosong. Yuk, pilih produk favoritmu!</p>';
+}
+
+function removeItem(id) {
+  delete cart[id];
+  saveCart();
+  renderCart();
+}
+
+function goCart() {
+  document.getElementById("cart").scrollIntoView({behavior:"smooth"});
+}
+
+function goCheckout() {
+  if (!cartDetails().length) {
+    alert("Keranjang masih kosong. Tambahkan produk terlebih dahulu.");
+    return;
+  }
+  document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("search").addEventListener("input", e=>{
+  searchTerm = e.target.value;
+  renderProducts();
+});
+
+document.getElementById("checkoutForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const items = cartDetails();
+  if (!items.length) {
+    alert("Keranjang masih kosong.");
+    goCart();
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  if (!name || !phone || !address) {
+    alert("Lengkapi nama, nomor WhatsApp, dan alamat.");
+    return;
+  }
+
+  const total = items.reduce((sum,p)=>sum+p.price*p.qty,0);
+  const order = items.map(p =>
+    `- ${p.name} x${p.qty} = ${rupiah(p.price*p.qty)}`
+  ).join("\n");
+
+  const message = [
+    "HALO ZAYY STORE, SAYA INGIN MEMESAN:",
+    "",
+    order,
+    "",
+    `Total produk: ${rupiah(total)}`,
+    "",
+    `Nama: ${name}`,
+    `WhatsApp pembeli: ${phone}`,
+    `Alamat: ${address}`,
+    `Pengiriman: ${document.getElementById("shipping").value}`,
+    `Pembayaran: ${document.getElementById("payment").value}`,
+    `Catatan: ${document.getElementById("notes").value.trim() || "-"}`,
+    "",
+    "Mohon konfirmasi total akhir dan ketersediaan produk. Terima kasih."
+  ].join("\n");
+
+  if (!/^\d{9,15}$/.test(WHATSAPP_NUMBER)) {
+    alert("Pemilik toko harus mengatur nomor WhatsApp di kode website.");
+    return;
+  }
+
+  window.open(
+    "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+renderCategories();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
